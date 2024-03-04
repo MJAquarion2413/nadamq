@@ -39,7 +39,7 @@ else:
 
 setup(
     name='nadamq',
-    version=versioneer.get_version(),
+    version=0.1.0,
     cmdclass=versioneer.get_cmdclass(),
     description='Embedded-friendly transport layer, inspired by ZeroMQ',
     keywords='cython embedded zeromq transport packet parse',
@@ -49,7 +49,7 @@ setup(
     license='GPL',
     # packages=['nadamq'],
     packages=find_namespace_packages(include=['nadamq*']),
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     include_package_data=True,
     ext_modules=extensions
 )
