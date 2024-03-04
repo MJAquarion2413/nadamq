@@ -1,14 +1,9 @@
-{% if GIT_DESCRIBE_NUMBER > '0' %}
-{% set GIT_VERSION = GIT_DESCRIBE_TAG[1:] + '.post' + GIT_DESCRIBE_NUMBER %}
-{% else %}
-{% set GIT_VERSION = GIT_DESCRIBE_TAG[1:] %}
-{% endif %}
 {% set PKG_NAME = 'nadamq' %}
 {% set MODULE_NAME = 'nadamq' %}
 {% set LIB_NAME = 'NadaMQ' %}
 package:
   name: {{ PKG_NAME }}
-  version: {{ GIT_VERSION }}
+  version: 0.1.0
 
 build:
   # If this is a new build for the same version, increment the build
