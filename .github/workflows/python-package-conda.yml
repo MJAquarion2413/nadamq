@@ -1,35 +1,35 @@
-name: Python Package using Conda
+name: Publish Conda Package on Linux
 
 on: [push]
 
 jobs:
-  build-windows:
+  build-and-publish:
     runs-on: windows-latest
-    strategy:
-      max-parallel: 5
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.6
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.6'
-        
-    - name: Add conda to system path
-      run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $
-        
-    - name: Install conda-build and anaconda-client
-      run: |
-        conda install conda-build anaconda-client
+      - name: Check out code
+        uses: actions/checkout@v4
 
-    - name: Build conda package
-      run: |
-        conda build .
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: 3.8
+          activate-environment: myenv
 
-    - name: Upload package to Anaconda
-      env:
-        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-      run: |
-        anaconda upload --user vignesh229 --token $ANACONDA_API_TOKEN $(conda build . --output)
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          conda install conda-build anaconda-client
+
+      - name: Build Conda package
+        shell: pwsh
+        run: |
+          conda build . -c conda-forge -c alexsk -c cfobel -c conda-forge
+
+      - name: Upload Conda package
+        shell: pwsh
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        run: |
+          $output = conda build . --output
+          anaconda upload --user vignesh229 --token $env:ANACONDA_API_TOKEN $output
