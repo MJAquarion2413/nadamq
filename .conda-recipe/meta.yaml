@@ -20,12 +20,10 @@ build:
 
 requirements:
   host:
-    - clangdev
-    - abseil-cpp gsl-lite fmt catch2
+    - {{ compiler('cxx') }}
   build:
-    - python >=3.8
-    - clanddev
-    - abseil-cpp gsl-lite fmt catch2
+    - python
+    - {{ compiler('cxx') }}
     - ragel # [win]
     - ntfsutils # [win]
     - libpython # [win]
@@ -55,7 +53,7 @@ outputs:
       - {{ SP_DIR }}/{{ MODULE_NAME }}
     requirements:
       run:
-        - python >=3.8
+        - python
         - {{ pin_subpackage(PKG_NAME + '-dev', max_pin='x.x') }}
         - pint
         - numpy
