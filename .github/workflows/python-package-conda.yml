@@ -24,7 +24,7 @@ jobs:
       - name: Build Conda package
         shell: pwsh
         run: |
-          conda build . -c conda-forge -c alexsk -c cfobel -c conda-forge -c conda-forge/label/llvm_rc
+          conda build . -c conda-forge -c alexsk -c cfobel -c dropbot
 
       - name: Upload Conda package
         shell: pwsh
@@ -32,4 +32,4 @@ jobs:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |
           $output = conda build . --output
-          anaconda upload --user vignesh229 --token $env:ANACONDA_API_TOKEN $output
+          anaconda upload --user mjkweerasinghe --token $env:ANACONDA_API_TOKEN $output
